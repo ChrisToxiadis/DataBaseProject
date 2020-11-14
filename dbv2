@@ -1,6 +1,4 @@
-CREATE SCHEMA carshop;
-
-CREATE table carshop.cars(
+CREATE table cars(
   idcars INT PRIMARY KEY,
   brand VARCHAR(45) NOT NULL,
   model VARCHAR(45) NOT NULL,
@@ -10,8 +8,8 @@ CREATE table carshop.cars(
   condition VARCHAR(45) NOT NULL,
   constraint c_condition check (condition in ('New','Used'))
   );
-  
-  CREATE TABLE carshop.customers (
+
+  CREATE TABLE customers (
   idcustomers INT NOT NULL,
   firstname VARCHAR(45) NOT NULL,
   lastname VARCHAR(45) NOT NULL,
@@ -20,12 +18,12 @@ CREATE table carshop.cars(
   PRIMARY KEY (idcustomers),
   UNIQUE (phone)
   );
-  
-  CREATE TABLE carshop.sales (
+
+  CREATE TABLE sales (
   date VARCHAR(45) NOT NULL,
   idcars INT NOT NULL,
   idcustomers INT NOT NULL,
-  
+
   CONSTRAINT fk_idcar
   FOREIGN KEY(idcars)
   REFERENCES carshop.cars(idcars)ON DELETE CASCADE,
