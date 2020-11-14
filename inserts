@@ -1,33 +1,33 @@
 #carshop.cars
 
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('1', 'Tesla', 'S', 'Silver', '200000', 'New');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('2', 'Tesla', 'X', 'Black', '220.000', 'New');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('3', 'BMW', 'X1', 'White', '27.500', 'Used');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('4', 'BMW', 'M3', 'Black', '60.000', 'New');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('5', 'Ford', 'Focus', 'Silver', '18.200', 'New');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('6', 'Ford', 'Fiesta', 'Red', '17.600', 'New');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('7', 'Mercedes', 'A150', 'White', '5.000', 'Used');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('8', 'Mercedes', 'CLC180', 'Black', '14.000', 'Used');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('9', 'Fiat', 'Panda', 'Red', '13.500', 'New');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('10', 'Toyoya', 'Auris', 'Silver', '25.000', 'New');
-INSERT INTO carshop.cars (idcars, brand, model, color, price, condition) VALUES ('11', 'Toyota', 'Land Cruiser', 'White', '65.000', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (1, 'Tesla', 'S', 'Silver', '200000', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (2, 'Tesla', 'X', 'Black', '220.000', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (3, 'BMW', 'X1', 'White', '27.500', 'Used');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (4, 'BMW', 'M3', 'Black', '60.000', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (5, 'Ford', 'Focus', 'Silver', '18.200', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (6, 'Ford', 'Fiesta', 'Red', '17.600', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (7, 'Mercedes', 'A150', 'White', '5.000', 'Used');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (8, 'Mercedes', 'CLC180', 'Black', '14.000', 'Used');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (9, 'Fiat', 'Panda', 'Red', '13.500', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (10, 'Toyoya', 'Auris', 'Silver', '25.000', 'New');
+INSERT INTO cars (idcars, brand, model, color, price, condition) VALUES (11, 'Toyota', 'Land Cruiser', 'White', '65.000', 'New');
 
 
 #carshop.customers
 
-INSERT INTO carshop.customers (idcustomers, firstname, lastname, phone, country) VALUES ('1', 'Nick', 'Papadopoulos', '6970220201', 'GR');
-INSERT INTO carshop.customers (idcustomers, firstname, lastname, phone, country) VALUES ('2', 'Maria', 'Athanaisou', '6973200200', 'GR');
-INSERT INTO carshop.customers (idcustomers, firstname, lastname, phone, country) VALUES ('3', 'George', 'Arseniou', '6980800201', 'GR');
-INSERT INTO carshop.customers (idcustomers, firstname, lastname, phone, country) VALUES ('4', 'Alex', 'Chatzis', '6980700300', 'GR');
-INSERT INTO carshop.customers (idcustomers, firstname, lastname, phone, country) VALUES ('5', 'Chris', 'Pratt', '6940400404', 'US');
-INSERT INTO carshop.customers (idcustomers, firstname, lastname, phone, country) VALUES ('6', 'Leonardo', 'Rodriguez', '6950500005', 'ES');
+INSERT INTO customers (idcustomers, firstname, lastname, phone, country) VALUES (1, 'Nick', 'Papadopoulos', '6970220201', 'GR');
+INSERT INTO customers (idcustomers, firstname, lastname, phone, country) VALUES (2, 'Maria', 'Athanaisou', '6973200200', 'GR');
+INSERT INTO customers (idcustomers, firstname, lastname, phone, country) VALUES (3, 'George', 'Arseniou', '6980800201', 'GR');
+INSERT INTO customers (idcustomers, firstname, lastname, phone, country) VALUES (4, 'Alex', 'Chatzis', '6980700300', 'GR');
+INSERT INTO customers (idcustomers, firstname, lastname, phone, country) VALUES (5, 'Chris', 'Pratt', '6940400404', 'US');
+INSERT INTO customers (idcustomers, firstname, lastname, phone, country) VALUES (6, 'Leonardo', 'Rodriguez', '6950500005', 'ES');
 
 
 #carshop.sales
 
-INSERT INTO carshop.sales (idcars, idcustomers, date) VALUES ('1', '1', '9/10/2020');
-INSERT INTO carshop.sales (idcars, idcustomers, date) VALUES ('4', '2', '10/10/2020');
-INSERT INTO carshop.sales (idcars, idcustomers, date) VALUES ('6', '3', '17/10/2020');
-INSERT INTO carshop.sales (idcars, idcustomers, date) VALUES ('8', '4', '20/10/2020');
-INSERT INTO carshop.sales (idcars, idcustomers, date) VALUES ('9', '5', '3/11/2020');
-INSERT INTO carshop.sales (idcars, idcustomers, date) VALUES ('10', '6', '8/11/2020');
+INSERT INTO sales (idcars, idcustomers, date) VALUES (1, 1, '9/10/2020');
+INSERT INTO sales (idcars, idcustomers, date) VALUES (4, 2, '10/10/2020');
+INSERT INTO sales (idcars, idcustomers, date) VALUES (6, 3, '17/10/2020');
+INSERT INTO sales (idcars, idcustomers, date) VALUES (8, 4, '20/10/2020');
+INSERT INTO sales (idcars, idcustomers, date) VALUES (9, 5, '3/11/2020');
+INSERT INTO sales (idcars, idcustomers, date) VALUES (10, 6, '8/11/2020');
