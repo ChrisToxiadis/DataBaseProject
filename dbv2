@@ -26,7 +26,7 @@ CREATE table cars(
 
   CONSTRAINT fk_idcar
   FOREIGN KEY(idcars)
-  REFERENCES carshop.cars(idcars)ON DELETE CASCADE,
+  REFERENCES cars(idcars)ON DELETE CASCADE,
 
   CONSTRAINT fk_idcustomers
   FOREIGN KEY(idcustomers)
