@@ -30,6 +30,6 @@ CREATE table cars(
 
   CONSTRAINT fk_idcustomers
   FOREIGN KEY(idcustomers)
-  REFERENCES carshop.customers(idcustomers) ON DELETE CASCADE,
+  REFERENCES customers(idcustomers) ON DELETE CASCADE,
   CONSTRAINT p_key PRIMARY KEY(idcars,idcustomers)
   );
