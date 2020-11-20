@@ -1,0 +1,19 @@
+#####################################################################################################
+
+CREATE OR REPLACE FUNCTION carshop.car_brand(varchar(45)) 
+RETURNS SETOF carshop.cars AS $$
+SELECT * FROM carshop.cars WHERE brand = 'Tesla';
+$$ LANGUAGE SQL
+
+SELECT * FROM car_brand('Tesla');
+
+#####################################################################################################
+
+CREATE OR REPLACE FUNCTION carshop.car_brand_condition(varchar(45), varchar(45)) 
+RETURNS SETOF carshop.cars AS $$
+SELECT * FROM carshop.cars WHERE brand = $1 and condition= $2;
+$$ LANGUAGE SQL
+
+SELECT * FROM carshop.car_brand_condition('Fiat', 'New');
+
+#####################################################################################################
