@@ -1,4 +1,4 @@
-package app;
+package login;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -57,9 +57,9 @@ public class LoginController{
 
 			try {
 				//Open main screen on new window
-				Stage window = new Stage();				
+                                Stage window = new Stage();				
 				BorderPane layout;
-				layout = (BorderPane)FXMLLoader.load(getClass().getResource("../style/RootScreen.fxml"));			
+				layout = (BorderPane)FXMLLoader.load(getClass().getResource("../home/Home.fxml"));			
 				Scene scene = new Scene(layout);									
 				window.setMaximized(true);
 				window.setTitle("CarDB 2020");			
