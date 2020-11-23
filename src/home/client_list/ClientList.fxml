@@ -56,12 +56,12 @@
             </ButtonBar>
          </children>
       </HBox>
-      <TableView prefHeight="430.0" prefWidth="948.0">
+      <TableView fx:id="clientTable" prefHeight="430.0" prefWidth="948.0">
         <columns>
-          <TableColumn prefWidth="99.0" text="Name" />
-          <TableColumn prefWidth="85.0" text="Lastname" />
-            <TableColumn prefWidth="73.0" text="Phone" />
-            <TableColumn prefWidth="89.0" text="Country" />
+          <TableColumn fx:id="nameColumn" prefWidth="99.0" text="Name" />
+          <TableColumn fx:id="surnameColumn" prefWidth="85.0" text="Lastname" />
+            <TableColumn fx:id="phoneColumn" prefWidth="73.0" text="Phone" />
+            <TableColumn fx:id="countryColumn" prefWidth="89.0" text="Country" />
         </columns>
       </TableView>
    </children>

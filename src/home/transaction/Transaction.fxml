@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="948.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.transaction.Transaction">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="948.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.transaction.TransactionController">
    <children>
       <Label alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="949.0" text="Transaction History">
          <font>
@@ -44,16 +44,16 @@
             </ButtonBar>
          </children>
       </HBox>
-      <TableView prefHeight="430.0" prefWidth="948.0">
+      <TableView fx:id="transactionTable" prefHeight="430.0" prefWidth="948.0">
         <columns>
-          <TableColumn prefWidth="99.0" text="Brand" />
-          <TableColumn prefWidth="85.0" text="Model" />
-            <TableColumn prefWidth="73.0" text="Color" />
-            <TableColumn prefWidth="101.0" text="Condition" />
-            <TableColumn prefWidth="92.0" text="Name" />
-            <TableColumn prefWidth="84.0" text="Lastname" />
-            <TableColumn prefWidth="73.0" text="Date" />
-            <TableColumn prefWidth="82.0" text="Price" />
+          <TableColumn fx:id="brandColumn" prefWidth="99.0" text="Brand" />
+          <TableColumn fx:id="modelColumn" prefWidth="85.0" text="Model" />
+            <TableColumn fx:id="colorColumn" prefWidth="73.0" text="Color" />
+            <TableColumn fx:id="conditionColumn" prefWidth="101.0" text="Condition" />
+            <TableColumn fx:id="nameColumn" prefWidth="92.0" text="Name" />
+            <TableColumn fx:id="surnameColumn" prefWidth="84.0" text="Lastname" />
+            <TableColumn fx:id="dateColumn" prefWidth="73.0" text="Date" />
+            <TableColumn fx:id="priceColumn" prefWidth="82.0" text="Price" />
         </columns>
       </TableView>
    </children>

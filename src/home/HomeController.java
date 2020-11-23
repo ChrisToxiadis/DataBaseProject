@@ -31,7 +31,7 @@ public class HomeController {
 	
         
         public HomeController(){
-            System.out.println("again home");
+            
         }
         
 	//Dashboard Side Menu Button
