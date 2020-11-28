@@ -19,7 +19,7 @@ CREATE TABLE carshop.customers (
   country VARCHAR(45) NOT NULL,
   constraint c_country check (country in ('GR','CY','ES','IT')),
   gender VARCHAR(45) NOT NULL,
-  constraint g_gender check (gender in ('Female','Male','Other')),
+  constraint g_gender check (gender in ('Female','Male')),
   PRIMARY KEY (idcustomers),
   UNIQUE (phone)
   );
