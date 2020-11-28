@@ -1,7 +1,7 @@
 package home.car_inventory;
 
 public class CarInventoryModel {
-   // private int id;
+    private String id;
     private String brand;
     private String model;
     private String color;
@@ -9,19 +9,27 @@ public class CarInventoryModel {
     private String condition;
     
     
-    
-    public CarInventoryModel(){
-        
-    }
 
-    public CarInventoryModel(String brand, String model, String color, String price, String condition) {
+
+    public CarInventoryModel(String id, String brand, String model, String color, String price, String condition) {
+        this.id = id;
         this.brand = brand;
         this.model = model;
         this.color = color;
         this.price = price;
         this.condition = condition;
     }
+    
+    
+    
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getBrand() {
         return brand;
     }

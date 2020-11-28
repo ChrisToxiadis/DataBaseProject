@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -22,6 +25,7 @@
       <HBox prefHeight="49.0" prefWidth="600.0">
          <children>
             <Button mnemonicParsing="false" text="New Transaction" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Edit Transaction" />
             <Button mnemonicParsing="false" text="Delete Transaction" />
          </children>
       </HBox>
@@ -30,30 +34,81 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="19.0" prefWidth="39.0" text="Date:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dateBox" prefHeight="25.0" prefWidth="162.0" />
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
       <HBox prefHeight="23.0" prefWidth="600.0">
          <children>
-            <ButtonBar prefHeight="23.0" prefWidth="602.0">
+            <ButtonBar prefHeight="25.0" prefWidth="443.0">
                <buttons>
-                  <Label text="Date:">
+                  <Label layoutX="282.0" layoutY="13.0" text="Brand:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="brandBox" prefWidth="150.0" />
+                  <Label layoutX="326.0" layoutY="13.0" text="Color:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="colorBox" prefWidth="150.0" />
                </buttons>
             </ButtonBar>
          </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ButtonBar prefHeight="25.0" prefWidth="441.0">
+              <buttons>
+                  <Label text="Phone">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="phoneTextField" />
+                  <Label layoutX="30.0" layoutY="13.0" text="Country">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="countryBox" prefHeight="25.0" prefWidth="337.0" />
+              </buttons>
+            </ButtonBar>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
       </HBox>
       <TableView fx:id="transactionTable" prefHeight="430.0" prefWidth="948.0">
         <columns>
-          <TableColumn fx:id="brandColumn" prefWidth="99.0" text="Brand" />
-          <TableColumn fx:id="modelColumn" prefWidth="85.0" text="Model" />
-            <TableColumn fx:id="colorColumn" prefWidth="73.0" text="Color" />
-            <TableColumn fx:id="conditionColumn" prefWidth="101.0" text="Condition" />
-            <TableColumn fx:id="nameColumn" prefWidth="92.0" text="Name" />
-            <TableColumn fx:id="surnameColumn" prefWidth="84.0" text="Lastname" />
             <TableColumn fx:id="dateColumn" prefWidth="73.0" text="Date" />
-            <TableColumn fx:id="priceColumn" prefWidth="82.0" text="Price" />
+            <TableColumn fx:id="carIdColumn" prefWidth="31.0" text="ID" />
+          <TableColumn fx:id="brandColumn" prefWidth="103.0" text="Brand" />
+          <TableColumn fx:id="modelColumn" prefWidth="108.0" text="Model" />
+            <TableColumn fx:id="colorColumn" prefWidth="75.0" text="Color" />
+            <TableColumn fx:id="conditionColumn" prefWidth="79.0" text="Condition" />
+            <TableColumn fx:id="priceColumn" prefWidth="83.0" text="Price" />
+            <TableColumn fx:id="clientIdColumn" prefWidth="67.0" text="ID" />
+            <TableColumn fx:id="nameColumn" prefWidth="120.0" text="Name" />
+            <TableColumn fx:id="surnameColumn" prefWidth="125.0" text="Surname" />
+            <TableColumn fx:id="countryColumn" prefWidth="83.0" text="Country" />
         </columns>
       </TableView>
    </children>

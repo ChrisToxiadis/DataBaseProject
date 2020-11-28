@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -22,6 +23,7 @@
       <HBox prefHeight="49.0" prefWidth="600.0">
          <children>
             <Button mnemonicParsing="false" text="Add Client" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Edit Client" />
             <Button mnemonicParsing="false" text="Delete Client" />
          </children>
       </HBox>
@@ -39,27 +41,34 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <TextField fx:id="nameTextField" prefHeight="25.0" />
                   <Label text="Lastname:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <TextField fx:id="lastnameTextField" prefHeight="25.0" />
                   <Label text="Country:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="countryBox" prefWidth="150.0" />
+                  <Label layoutX="370.0" layoutY="13.0" text="Gender:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="genderBox" layoutX="523.0" layoutY="10.0" prefWidth="150.0" />
                </buttons>
             </ButtonBar>
          </children>
       </HBox>
       <TableView fx:id="clientTable" prefHeight="430.0" prefWidth="948.0">
         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="99.0" text="ID" />
           <TableColumn fx:id="nameColumn" prefWidth="99.0" text="Name" />
-          <TableColumn fx:id="surnameColumn" prefWidth="85.0" text="Lastname" />
+          <TableColumn fx:id="surnameColumn" prefWidth="85.0" text="Surname" />
             <TableColumn fx:id="phoneColumn" prefWidth="73.0" text="Phone" />
             <TableColumn fx:id="countryColumn" prefWidth="89.0" text="Country" />
         </columns>

@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class DBConnection {
     static String driver = "org.postgresql.Driver";
-    static String url = "jdbc:postgresql://dblabs.it.teithe.gr:5432";
+    static String url = "jdbc:postgresql://dblabs.it.teithe.gr:5432/";
     static Connection dbcon = null;
     static Statement state = null;
     static ResultSet res = null;
@@ -35,18 +35,16 @@ public class DBConnection {
     }
     
     
-    public static Vector<String[]> loadDBinVector(ResultSet res, String alias) throws SQLException{
-        Vector<String[]> vec = new Vector<String[]>(25);
+    public static Vector<Vector<String>> loadDBinVector(ResultSet res, String alias) throws SQLException{
+        Vector<Vector<String>> vec = new Vector<Vector<String>>(25);
         StringTokenizer tok;
-        int counter = 0;
         while(res.next()){
                 tok = new StringTokenizer(res.getString(alias),"(,)");
-                String[] array = new String[8];
+                Vector<String> vector = new Vector<String>(10);
                 while(tok.hasMoreTokens())
-                    array[counter++] = tok.nextToken();
-                vec.addElement(array);
-                counter = 0; 
-            }
+                    vector.addElement(tok.nextToken());
+                vec.addElement(vector);
+        }
         return vec;
     }
     

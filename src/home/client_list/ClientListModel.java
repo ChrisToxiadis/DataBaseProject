@@ -2,18 +2,28 @@ package home.client_list;
 
 
 public class ClientListModel {
+    private String id;
     private String name;
     private String surname;
     private String phone;
     private String country;
 
-    public ClientListModel(String name, String surname, String phone, String country) {
+    public ClientListModel(String id, String name, String surname, String phone, String country) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.country = country;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }
@@ -45,10 +55,5 @@ public class ClientListModel {
     public void setCountry(String country) {
         this.country = country;
     }
-    
-    
-    
-    
-    
     
 }

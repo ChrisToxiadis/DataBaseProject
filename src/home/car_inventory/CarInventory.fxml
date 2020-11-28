@@ -22,6 +22,7 @@
       <HBox prefHeight="49.0" prefWidth="600.0">
          <children>
             <Button mnemonicParsing="false" text="Add Car" />
+            <Button mnemonicParsing="false" text="Edit Car" />
             <Button mnemonicParsing="false" text="Delete Car" />
          </children>
       </HBox>
@@ -39,37 +40,38 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="brandBox" prefWidth="150.0" />
                   <Label text="Model:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="modelBox" prefWidth="150.0" />
                   <Label text="Color:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="colorBox" prefWidth="150.0" />
                   <Label text="Price:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="priceBox" prefWidth="150.0" />
                   <Label text="Condition:">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="conditionBox" prefWidth="150.0" />
                </buttons>
             </ButtonBar>
          </children>
       </HBox>
       <TableView fx:id="carTable" prefHeight="430.0" prefWidth="948.0">
         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="99.0" text="ID" />
           <TableColumn fx:id="brandColumn" prefWidth="99.0" text="Brand" />
           <TableColumn fx:id="modelColumn" prefWidth="85.0" text="Model" />
             <TableColumn fx:id="colorColumn" prefWidth="73.0" text="Color" />
