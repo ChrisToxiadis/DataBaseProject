@@ -1,18 +1,24 @@
 package login;
 
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.IOException;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+import util.FxmlPath;
+import util.PopUpController;
+import util.PopUpWindow;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
-public class LoginController{
+public class LoginController extends PopUpController{
 	
 	@FXML
 	private Button btnCancel;
@@ -54,26 +60,29 @@ public class LoginController{
 		else if(user.equals(Username) && password.equals(Password)) {
 			lblLoginError.setText("");
 			System.out.println("YOU LOGGED IN!!!!");			
-
-			try {
-				//Open main screen on new window
-                                Stage window = new Stage();				
-				BorderPane layout;
-				layout = (BorderPane)FXMLLoader.load(getClass().getResource("../home/Home.fxml"));			
-				Scene scene = new Scene(layout);									
-				window.setMaximized(true);
-				window.setTitle("CarDB 2020");			
-				window.setScene(scene);
-				window.show();
-				
-				//Close Login window
-				Stage stageOld = (Stage) btnLogin.getScene().getWindow();
-				stageOld.close();
 			
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
+			Stage window = PopUpWindow.NewBorderPaneWindow("CarDB 2020", FxmlPath.homeFXML, StageStyle.DECORATED, Modality.NONE, false);
+			window.setResizable(true);
+			//window.setMaximized(true);			
+			//Platform.setImplicitExit(false);
+			window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		          public void handle(WindowEvent event) {
+		        	//Show Exit Confirmation Window
+		      		Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+		      		alert.setTitle("Exit Confirmation");
+		      		alert.setHeaderText("Are you sure you want to quit?");
+		      		alert.showAndWait();
+		      		
+		      		//Exit application if "YES" is selected
+		      		if (alert.getResult() == ButtonType.YES) {
+		      			window.close();
+		      		} else event.consume();
+		          }
+		      }); 
+			
+			//Close Login window
+			Stage stageOld = (Stage) btnLogin.getScene().getWindow();
+			stageOld.close();
 
 		}
 		//Wrong User or Password
