@@ -18,7 +18,7 @@ public class ObservableListCreator {
     
     
     
-    public ObservableList<String> getObserverList(ResultSet res, String alias)throws SQLException{
+    public ObservableList<String> getObservableList(ResultSet res, String alias)throws SQLException{
             try {
                 Vector<Vector<String>> vector = DBConnection.loadDBinVector(res, alias);
                 list.add(DEFAULT_CHOICE_BOX_VALUE);
@@ -32,6 +32,19 @@ public class ObservableListCreator {
         } catch (SQLException ex) {
             Logger.getLogger(ObservableListCreator.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
+        }
+    }
+    
+    
+    public ObservableList<String> getObservableList(String[] array){
+        try{
+        for(int i = 0; i < array.length; i++)
+            list.add(array[i]);
+        return list;
+        }
+        catch(Exception ex){
+            System.out.println("What i thought + " + ex.getLocalizedMessage());
+            return null;
         }
     }
     

@@ -39,7 +39,7 @@ public class DBConnection {
         Vector<Vector<String>> vec = new Vector<Vector<String>>(25);
         StringTokenizer tok;
         while(res.next()){
-                tok = new StringTokenizer(res.getString(alias),"(,)");
+                tok = new StringTokenizer(res.getString(alias),"(,)\"");
                 Vector<String> vector = new Vector<String>(10);
                 while(tok.hasMoreTokens())
                     vector.addElement(tok.nextToken());

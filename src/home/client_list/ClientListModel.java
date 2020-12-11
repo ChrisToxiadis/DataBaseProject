@@ -7,13 +7,15 @@ public class ClientListModel {
     private String surname;
     private String phone;
     private String country;
+    private String gender;
 
-    public ClientListModel(String id, String name, String surname, String phone, String country) {
+    public ClientListModel(String id, String name, String surname, String phone, String country, String gender) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.country = country;
+        this.gender = gender;
     }
 
     public String getId() {
@@ -54,6 +56,14 @@ public class ClientListModel {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+    
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
     
 }

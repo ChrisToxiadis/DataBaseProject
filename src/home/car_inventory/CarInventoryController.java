@@ -2,6 +2,7 @@ package home.car_inventory;
 
 import data_base_interface.DBConnection;
 import home.create_observable_list.ObservableListCreator;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -16,12 +17,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.*;
 import java.util.Vector;
+import javafx.event.ActionEvent;
 import javafx.scene.control.ChoiceBox;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
+import util.Controller;
+import util.FxmlPath;
+import util.PopUpWindow;
 
 
 
 
-public class CarInventoryController implements Initializable{
+public class CarInventoryController extends Controller implements Initializable{
     @FXML
     private TableView carTable;
     
@@ -97,27 +104,27 @@ public class CarInventoryController implements Initializable{
             
             
             //Create Choice box for brand
-            list1 = list_creator1.getObserverList(DBConnection.getStatement().executeQuery("select getBrands() as Brands"), "Brands");
+            list1 = list_creator1.getObservableList(DBConnection.getStatement().executeQuery("select getBrands() as Brands"), "Brands");
             DBConnection.closeConnection();
             brandBox.setItems(list1);
             
             //Create Choice box for model
-            list2 = list_creator2.getObserverList(DBConnection.getStatement().executeQuery("select getModels() as Models"), "Models");
+            list2 = list_creator2.getObservableList(DBConnection.getStatement().executeQuery("select getModels() as Models"), "Models");
             DBConnection.closeConnection();
             modelBox.setItems(list2);
             
             //Create Choice box for color
-            list3 = list_creator3.getObserverList(DBConnection.getStatement().executeQuery("select getColors() as Colors"), "Colors");
+            list3 = list_creator3.getObservableList(DBConnection.getStatement().executeQuery("select getColors() as Colors"), "Colors");
             DBConnection.closeConnection();
             colorBox.setItems(list3);
             
             //Create Choice box for price
-            list4 = list_creator4.getObserverList(DBConnection.getStatement().executeQuery("select getPrices() as Prices"), "Prices");
+            list4 = list_creator4.getObservableList(DBConnection.getStatement().executeQuery("select getPrices() as Prices"), "Prices");
             DBConnection.closeConnection();
             priceBox.setItems(list4);
             
             //Create Choice box for condition
-            list5 = list_creator5.getObserverList(DBConnection.getStatement().executeQuery("select getConditions() as Conditions"), "Conditions");
+            list5 = list_creator5.getObservableList(DBConnection.getStatement().executeQuery("select getConditions() as Conditions"), "Conditions");
             DBConnection.closeConnection();
             conditionBox.setItems(list5);
             
@@ -130,6 +137,10 @@ public class CarInventoryController implements Initializable{
             
             // add Listeners for Choice Boxes
             setChoiceBoxListeners();
+            
+            
+            
+           
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CarInventoryController.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,6 +230,79 @@ public class CarInventoryController implements Initializable{
         array[2][0] = "select select_color(";
         array[3][0] = "select select_price(";
         array[4][0] = "select select_condition(";
+    }
+    
+    
+    
+
+
+
+        //Add Car Button Action, Opens Add Car Window
+	public void btnAddCarOnAction(ActionEvent event) throws IOException{
+		PopUpWindow.NewBorderPaneWindow("Adding Car", FxmlPath.addCarFXML, StageStyle.DECORATED, Modality.APPLICATION_MODAL, false, this.getHomeController(), this);
+	}
+    
+	//Edit Car Button Action. Opens Edit Car Window
+	public void btnEditCarOnAction(ActionEvent event) throws IOException{
+		PopUpWindow.NewBorderPaneWindow("Editing Car", FxmlPath.editCarFXML, StageStyle.DECORATED, Modality.APPLICATION_MODAL, true, this.getHomeController(), this);
+	}
+
+
+	//Add chosen car to selection
+	public void btnSelectOnAction(ActionEvent event) throws IOException{
+            CarInventoryModel row;
+            if(carTable.getSelectionModel().getSelectedIndex() < 0)
+                System.out.println("there is no line selected");
+            else{
+                row = (CarInventoryModel) carTable.getSelectionModel().getSelectedItem();
+		this.getHomeController().setSelectedCar(row.getId());
+            }
+	}
+        
+        
+     @Override
+    public ObservableList<CarInventoryModel> getCarTableList(){
+        return list;
+    }
+    
+    @Override
+	public TableView getTable() {
+		System.out.println("I override the method@");
+		return carTable;
+		
+	}
+    
+    @Override
+    public String[] getRow(){
+        System.out.println("IT IS FINE !!!!!!!!!!!");
+        CarInventoryModel row = getSelectedRow();
+      
+        if(row==null)
+            System.out.println("THIS IS THE PROBLM");
+        
+        String[] array = new String[6];
+            
+            array[0] = row.getId();
+            array[1] = row.getBrand();
+            array[2] = row.getModel();
+            array[3] = row.getColor();
+            array[4] = row.getPrice();
+            array[5] = row.getCondition();
+            
+            for(int i = 0; i < array.length; i++)
+                System.out.println("Array = " + array[i]);
+            return array;
+        }
+    
+    
+    private CarInventoryModel getSelectedRow(){
+        CarInventoryModel row;
+        if(carTable.getSelectionModel().getSelectedIndex() >= 0)
+            row = (CarInventoryModel) carTable.getSelectionModel().getSelectedItem();
+        else
+            row = null;
+        System.out.println(row);
+        return row;
     }
     
 }

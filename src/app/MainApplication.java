@@ -1,28 +1,18 @@
 package app;
 	
 import javafx.application.Application;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.fxml.FXMLLoader;
-
+import util.FxmlPath;
+import util.PopUpWindow;
 
 
 public class MainApplication extends Application {
 	@Override
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../login/Login.fxml"));
-			Scene scene = new Scene(root);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());			
-			primaryStage.initStyle(StageStyle.UNDECORATED);			
-			primaryStage.setScene(scene);
-			primaryStage.show();
+	public void start(Stage primaryStage) {		
 		
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		PopUpWindow.NewBorderPaneWindow("login", FxmlPath.loginFXML, StageStyle.UNDECORATED, Modality.NONE, false);
 	}
 	
 	public static void main(String[] args) {

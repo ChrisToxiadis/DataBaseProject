@@ -14,16 +14,16 @@
    <left>
       <AnchorPane prefHeight="350.0" prefWidth="209.0" style="-fx-background-color: #b33636;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="175.0" fitWidth="237.0" layoutX="2.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="175.0" fitWidth="207.0" layoutX="6.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/CarDB_logo.png" />
+                  <Image url="@../images/carshop.png" />
                </image></ImageView>
-            <Label layoutX="56.0" layoutY="70.0" text="Welcome" textAlignment="CENTER">
+            <Label layoutX="61.0" layoutY="73.0" text="Welcome" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label alignment="BASELINE_CENTER" layoutX="61.0" layoutY="254.0" text="CarDB 2020 v1" />
+            <Label alignment="BASELINE_CENTER" layoutX="66.0" layoutY="255.0" text="CarShop 2020 v1" />
          </children>
       </AnchorPane>
    </left>
@@ -32,7 +32,7 @@
          <children>
             <TextField fx:id="txtFieldUser" layoutX="95.0" layoutY="85.0" promptText="User" text="admin" />
             <PasswordField fx:id="txtFieldPassword" layoutX="95.0" layoutY="149.0" promptText="Password" text="admin" />
-            <Button fx:id="btnLogin" layoutX="97.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnLoginOnAction" prefHeight="32.0" prefWidth="151.0" style="-fx-background-color: #b33636;" text="LOGIN" textFill="WHITE">
+            <Button fx:id="btnLogin" layoutX="97.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnLoginOnAction" prefHeight="32.0" prefWidth="151.0" text="LOGIN" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -48,7 +48,7 @@
                   <Image url="@../images/password_icon.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnCancel" layoutX="96.0" layoutY="295.0" mnemonicParsing="false" onAction="#btnCancelOnAction" prefHeight="32.0" prefWidth="151.0" style="-fx-background-color: #b33636;" text="CANCEL" textFill="WHITE">
+            <Button fx:id="btnCancel" layoutX="96.0" layoutY="295.0" mnemonicParsing="false" onAction="#btnCancelOnAction" prefHeight="32.0" prefWidth="151.0" text="CANCEL" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
