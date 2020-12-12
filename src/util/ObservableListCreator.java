@@ -1,6 +1,5 @@
-package home.create_observable_list;
+package util;
 
-import data_base_interface.DBConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -8,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import util.DBConnection;
 
 
 public class ObservableListCreator {

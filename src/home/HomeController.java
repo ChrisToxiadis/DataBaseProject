@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import home.car_inventory.CarInventoryController;
 import home.client_list.ClientListController;
+import home.dashboard.DashboardController;
 import home.transaction.TransactionController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,15 +48,24 @@ public class HomeController extends PopUpController{
 
 	
 
-	@FXML
+		@FXML
 	//Sets the dashboard as the default selection of the side menu and loads it.
 	void initialize() throws IOException{
 		selected = btnDashboard;
 		selected.getStyleClass().add("side-menu-button-selected");
 		
-		System.out.println("Loading " + FxmlPath.dashboardFXML);
-		VBox vbox = FXMLLoader.load(getClass().getResource(FxmlPath.dashboardFXML));
-		rootVBox.getChildren().setAll(vbox);
+		//System.out.println("Loading " + FxmlPath.dashboardFXML);
+		//VBox vbox = FXMLLoader.load(getClass().getResource(FxmlPath.dashboardFXML));
+		//rootVBox.getChildren().setAll(vbox);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FxmlPath.dashboardFXML));		
+		VBox vbox = fxmlLoader.load();
+		
+		rootVBox.getChildren().setAll(vbox.getChildren());
+		
+		DashboardController dashboardController = fxmlLoader.getController();
+		dashboardController.setHomeController(this);
+		dashboardController.InitializeController();
 	}
 	
 	//Dashboard Side Menu Button
@@ -63,12 +73,23 @@ public class HomeController extends PopUpController{
 		MoveMenu(btnDashboard);
 		
 		System.out.println("Loading " + FxmlPath.dashboardFXML);
-		VBox vbox = FXMLLoader.load(getClass().getResource(FxmlPath.dashboardFXML));
-		rootVBox.getChildren().setAll(vbox);		
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FxmlPath.dashboardFXML));		
+		VBox vbox = fxmlLoader.load();
+		
+		rootVBox.getChildren().setAll(vbox.getChildren());
+		
+		DashboardController dashboardController = fxmlLoader.getController();
+		dashboardController.setHomeController(this);
+		dashboardController.InitializeController();
+
 	}
 	
 	//Car Inventory Side Menu Button
 	public void btnCarInvOnAction(ActionEvent event) throws IOException{
+		LoadCarInv(false);
+	}
+	public void LoadCarInv(Boolean forceAdd) throws IOException {
 		MoveMenu(btnCarInv);
 		
 
@@ -82,10 +103,14 @@ public class HomeController extends PopUpController{
 		carInventoryController.setHomeController(this);
 		
 		carInventoryController.InitializeController();
+		if(forceAdd) carInventoryController.btnAddCarOnAction(null);
 	}
 	
 	//Transaction History Side Menu Button
 	public void btnTransactionHistoryOnAction(ActionEvent event) throws IOException{
+		LoadTransactionHistory(false);
+	}
+	public void LoadTransactionHistory(Boolean forceAdd) throws IOException {
 		MoveMenu(btnTransactionHistory);		
 
 		System.out.println("Loading " + FxmlPath.transactionHistoryFXML);
@@ -98,10 +123,13 @@ public class HomeController extends PopUpController{
 		transactionController.setHomeController(this);
 		
 		transactionController.InitializeController();
+		if(forceAdd) transactionController.btnAddTransactionOnAction(null);
 	}
-	
 	//Client List Side Menu Button
 	public void btnClientListOnAction(ActionEvent event) throws IOException{
+		LoadClientList(false);
+	}
+	public void LoadClientList(Boolean forceAdd) throws IOException {
 		MoveMenu(btnClientList);
 		
 
@@ -115,6 +143,7 @@ public class HomeController extends PopUpController{
 		clientListController.setHomeController(this);
 		
 		clientListController.InitializeController();
+		if(forceAdd) clientListController.btnAddClientOnAction(null);
 	}
 	
 	//Exit Button, Asks confirmation, closes application

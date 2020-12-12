@@ -1,4 +1,4 @@
-package data_base_interface;
+package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class DBConnection {
     static String driver = "org.postgresql.Driver";
-    static String url = "jdbc:postgresql://dblabs.it.teithe.gr:5432/";
+    static String url = "jdbc:postgresql://dblabs.it.teithe.gr:5432";
     static Connection dbcon = null;
     static Statement state = null;
     static ResultSet res = null;

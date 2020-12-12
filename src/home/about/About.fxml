@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -28,37 +29,46 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="350.0" prefWidth="340.0">
+            <VBox alignment="CENTER" prefHeight="350.0" prefWidth="340.0">
                <children>
                   <Label text="Version">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label text="0.1">
+                  <Label text="1.0">
                      <font>
                         <Font size="13.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </Label>
                   <Label text="About">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label text="&quot;PROGRAM DESCRIPTION&quot;">
+                  <Label prefHeight="57.0" prefWidth="281.0" text="Carshop is a program that helps you create and manage databases of cars and clients. Aids you in all your car dealership needs" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="13.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </Label>
                   <Label text="Creators">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Τριανταφυλλίδης Δημήτρης.&#10;Χρήστος Τοξιάδης&#10;Ευάγγελος Γανιαρης">
+                  <Label text="Τριανταφυλλίδης Δημήτρης&#10;Χρήστος Τοξιάδης&#10;Ευάγγελος Γανιαρης" textAlignment="CENTER">
                      <font>
                         <Font size="13.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </Label>
                   <Label text="Contract">
                      <font>

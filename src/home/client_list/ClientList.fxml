@@ -31,7 +31,7 @@
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin></Button>
-            <Button mnemonicParsing="false" text="Delete Client" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#btnDeleteCarOnAction" text="Delete Client" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin></Button>

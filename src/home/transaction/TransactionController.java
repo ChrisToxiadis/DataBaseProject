@@ -1,8 +1,7 @@
 package home.transaction;
 
-import data_base_interface.DBConnection;
 import home.car_inventory.CarInventoryController;
-import home.create_observable_list.ObservableListCreator;
+import util.ObservableListCreator;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -17,17 +16,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import util.Controller;
+import util.DBConnection;
 import util.FxmlPath;
 import util.PopUpWindow;
 
@@ -69,33 +69,40 @@ public class TransactionController extends Controller implements Initializable{
     private TextField phoneTextField;
     @FXML
     private DatePicker dateBox;
-
-	@FXML
-	private Button btnAddTransaction;
+    @FXML
+    private Button btnAddTransaction;
 
     
     private ObservableList<TransactionModel> list = FXCollections.observableArrayList();
     private final String DEFAULT_CHOICE_BOX_VALUE = "All";
     private String[][] array = new String[5][2];
-    ObservableListCreator list_creator1 = new ObservableListCreator();
-            ObservableListCreator list_creator2 = new ObservableListCreator();
-            ObservableListCreator list_creator3 = new ObservableListCreator();
-            
-            ObservableList<String> list1;
-            ObservableList<String> list2;
-            ObservableList<String> list3;
+    
+    private ObservableListCreator list_creator1 = new ObservableListCreator();
+    private ObservableListCreator list_creator2 = new ObservableListCreator();
+    private ObservableListCreator list_creator3 = new ObservableListCreator();
+    private ObservableList<String> list1;
+    private ObservableList<String> list2;
+    private ObservableList<String> list3;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
         try {
             initializeArray(array);
+            initializeTransactionTable();
+            initializeChoiceBox();
+            setChoiceBoxListeners(); // add Listeners for Choice Boxes
             
-            
-            
-            ResultSet res = DBConnection.getStatement().executeQuery("select getTable3() as getTable");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CarInventoryController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CarInventoryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    private void initializeTransactionTable() throws SQLException, ClassNotFoundException{
+        ResultSet res = DBConnection.getStatement().executeQuery("select getTable3() as getTable");
             Vector<Vector<String>> vector = DBConnection.loadDBinVector(res, "getTable");
             for(int i = 0; i < vector.size(); i++){
                 int j = 0;
@@ -128,9 +135,11 @@ public class TransactionController extends Controller implements Initializable{
             countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
             
             transactionTable.setItems(list);
-            
-            
-            //Create Choice box for brand
+    }
+    
+    
+    private void initializeChoiceBox() throws ClassNotFoundException, SQLException{
+        //Create Choice box for brand
             list1 = list_creator1.getObservableList(DBConnection.getStatement().executeQuery("select getTransactionBrands() as Brands"), "Brands");
             DBConnection.closeConnection();
             brandBox.setItems(list1);
@@ -145,22 +154,10 @@ public class TransactionController extends Controller implements Initializable{
             DBConnection.closeConnection();
             countryBox.setItems(list3);
             
-            
             //give default values in choice boxes
             brandBox.getSelectionModel().selectFirst();
             colorBox.getSelectionModel().selectFirst();
             countryBox.getSelectionModel().selectFirst();
-            
-          //  brandBox.getSelectionModel().clearSelection();
-            
-            // add Listeners for Choice Boxes
-            setChoiceBoxListeners();
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CarInventoryController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CarInventoryController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     
@@ -276,13 +273,11 @@ public class TransactionController extends Controller implements Initializable{
               ResultSet res = DBConnection.getStatement().executeQuery("select delete_transaction(" + row.getCar_id() + ","
                     + row.getCustomer_id() + ")");
               DBConnection.closeConnection();
-           //   brandBox.getSelectionModel().clearSelection();
               
               deleter(list1);
               deleter(list2);
               deleter(list3);
               
-            //This setters will be in a method
             //Create Choice box for brand
             list1 = list_creator1.getObservableList(DBConnection.getStatement().executeQuery("select getTransactionBrands() as Brands"), "Brands");
             DBConnection.closeConnection();
@@ -298,88 +293,14 @@ public class TransactionController extends Controller implements Initializable{
             DBConnection.closeConnection();
             countryBox.setItems(list3);
             
-            
-            
-            for(int i = 0; i < array.length; i++)
-                if(array[i][1].startsWith("'"))
-                    array[i][1] = array[i][1].substring(1, array[i][1].length()-1);
-            
-            array[1][1] = name_checker(list1,array[1][1]);
-            array[2][1] = name_checker(list2,array[2][1]);
-            array[3][1] = name_checker(list3,array[3][1]);
-            
-            
-            //for(int i = 0; i < array.length; i++)
-                createsSQLQuery(array[0][1], 0);
-            
-            
-            
-            
-       //     for(int i = 0; i < array.length; i++){
-                
-                
-                //if(array[1][1] = name_checker(list1,array[1][1]))
-                
-                //brandBox.getSelectionModel().select(array[1][1]);
-              ///  colorBox.getSelectionModel().select(array[2][1]);
-              ///  countryBox.getSelectionModel().select(array[3][1]);
-              
-              brandBox.getSelectionModel().selectLast();
-              colorBox.getSelectionModel().selectLast();
-              countryBox.getSelectionModel().selectLast();
-              
-              int counter = 0;
-          /*    while((counter == 0 || !list1.get(counter).equals(DEFAULT_CHOICE_BOX_VALUE)) && counter < list1.size()){
-                  list1.remove(0);
-                  counter++;
-              }*/
-              
-                  
-          /*        do{
-                  list1.remove(0);
-              }while
-            */  
-              
-         //   }
-              
-              ////I have to write cleaner code. I MUST write seperate methods to initiallize etc. in this methods the bugs are many.
-              
-              /**
-               Choice boxes are not loading dynamically. Also if a combination of them givesome results and then
-               * the results get deleted although the filter is not cleared the table will load all the other 
-               * not deleted rows even if they are not the same values as choice box. Also text Fields have to cleared
-               *
-               */
-              
-              
-              
-              
-          /*      while(list.size() > 0)
-                  list.remove(0);
-                DBConnection.closeConnection();
-                res = DBConnection.getStatement().executeQuery("select getTable3() as getTable");
-                Vector<Vector<String>> vector = DBConnection.loadDBinVector(res, "getTable");
-                
-                for(int i = 0; i < vector.size(); i++){
-                int j = 0;
-                list.add(new TransactionModel(
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++),
-                        vector.elementAt(i).elementAt(j++)
-                ));
-            }*/
+            createsSQLQuery(array[0][1], 0);
+              brandBox.getSelectionModel().selectFirst();
+              colorBox.getSelectionModel().selectFirst();
+              countryBox.getSelectionModel().selectFirst();
+              PopUpWindow.Information("TRANSACTION DELETION", "You have deleted successfully a transaction");
             }
             else
-                System.out.println("Exception");
-            
+                PopUpWindow.Information("NOTHING IS SELECTED", "You have to select a row first");
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TransactionController.class.getName()).log(Level.SEVERE, null, ex);
@@ -395,16 +316,6 @@ public class TransactionController extends Controller implements Initializable{
             list.remove(0);
     }
     
-    
-    private String name_checker(ObservableList<String> list, String name){
-        for(int i = 0; i < list.size(); i++)
-            if(name.equals(list.get(i)) && !name.equals(DEFAULT_CHOICE_BOX_VALUE))
-                return new String("'" + name + "'");
-        return DEFAULT_CHOICE_BOX_VALUE;
-    }
-    
-    
-    
     //Add Transaction Button Action, Opens the Add Car Pop-Up Window
 	public void btnAddTransactionOnAction(ActionEvent event) throws IOException{
 		PopUpWindow.NewBorderPaneWindow("Adding Transaction", FxmlPath.addTransactionFXML, StageStyle.DECORATED, Modality.APPLICATION_MODAL, true, this.getHomeController(), this);
@@ -412,6 +323,9 @@ public class TransactionController extends Controller implements Initializable{
 	
 	//Edit Transaction Button Action, Opens the Edit Car Pop-Up Window
 	public void btnEditTransactionOnAction(ActionEvent event) throws IOException{
+            if(transactionTable.getSelectionModel().getSelectedIndex() < 0)
+                PopUpWindow.Information("NOTHING IS SELECTED", "You have to select a row first");
+            else
 		PopUpWindow.NewBorderPaneWindow("Editing Transaction", FxmlPath.editTransactionFXML, StageStyle.DECORATED, Modality.APPLICATION_MODAL, true, this.getHomeController(), this);
 	}
         
@@ -436,13 +350,12 @@ public class TransactionController extends Controller implements Initializable{
             row = (TransactionModel) transactionTable.getSelectionModel().getSelectedItem();
         else
             row = null;
-        System.out.println(row);
         return row;
     }
 
 
 
-@Override
+        @Override
 	public void InitializeController() {
 		String car = this.getHomeController().getSelectedCar();
 		String client = this.getHomeController().getSelectedClient();

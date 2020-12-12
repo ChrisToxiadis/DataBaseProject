@@ -1,17 +1,11 @@
 package home.car_inventory.pop_up;
 
-import data_base_interface.DBConnection;
 import home.car_inventory.CarInventoryModel;
-import home.create_observable_list.ObservableListCreator;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,10 +14,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.DBConnection;
 import util.PopUpController;
+import util.PopUpWindow;
 
 public class AddCarController extends PopUpController implements Initializable{
     
@@ -37,12 +32,6 @@ public class AddCarController extends PopUpController implements Initializable{
     private TextField priceTextFieldAdd;
     @FXML
     private ChoiceBox<String> conditionBoxAdd;
-
-
-	@FXML
-	private TextField idTextFieldAdd;
-	
-	int random_id;
     
     
     private ObservableList<String> list1;
@@ -51,8 +40,15 @@ public class AddCarController extends PopUpController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb){
-       // initializeChoiceBox();
-        System.out.print(true);
+        initializeChoiceBox();
+    }
+    
+    public AddCarController(){
+        
+    }
+    
+    
+    private void initializeChoiceBox(){
         String[] color_array = {"Silver", "Black", "White", "Red", "Blue"};
         String[] condition_array = {"New", "Used"};
         
@@ -68,25 +64,20 @@ public class AddCarController extends PopUpController implements Initializable{
         colorBoxAdd.getSelectionModel().selectFirst();
         conditionBoxAdd.getSelectionModel().selectFirst();
     }
-    
-    public AddCarController(){
-       // initializeChoiceBox();
-    }
-    
-    
-    private void initializeChoiceBox(){
-        //System.out.print(true);
-        String[] color_array = {"Silver", "Black", "White", "Red", "Blue"};
-        String[] condition_array = {"Silver", "Black", "White", "Red", "Blue"};
-      //  list1 = list_creator1.getObservableList(color_array);
-       // list2 = list_creator2.getObservableList(condition_array);
-    /*    colorBoxAdd.setItems(list1);
-        conditionBoxAdd.setItems(list2);
-    */}
 
 	//Add Car Button Handler
 	public void btnAddCarAddOnAction(ActionEvent event) throws IOException, ClassNotFoundException{
         try{
+            if(inputIsEmpty()){
+                PopUpWindow.Information("Wrong Input", "You have to fill in all the fields");
+                return;
+            }
+            
+            if(!priceIsNumber()){
+                PopUpWindow.Information("Wrong Input", "Price field takes only numbers");
+                return;
+            }
+            
             StringBuilder sql_insert = new StringBuilder();
             
             sql_insert.append(createId()).append(",");
@@ -97,25 +88,22 @@ public class AddCarController extends PopUpController implements Initializable{
             sql_insert.append("'").append(conditionBoxAdd.getSelectionModel().getSelectedItem()).append("'");
             System.out.println("sql insert is " + sql_insert.toString());
             DBConnection.getStatement().executeUpdate("select add_car(" + sql_insert.toString() + ")");
-            //DBConnection.getStatement().execute("select add(" + sql_insert.toString() + ")");
+            
             DBConnection.closeConnection();
             ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+            PopUpWindow.Information("CAR ADDED", "You have added successfully a car");
         }
             catch(SQLException ex){
-                System.out.println("sql ex" + ex.toString());
-                System.out.println("sql ex" + ex.getMessage());
-                System.out.println("sql ex" + ex.getLocalizedMessage());
-                System.out.println("sql ex" + ex.getErrorCode());
-                System.out.println("sql ex" + ex.getSQLState());
+                if(!ex.getSQLState().equals("0100E"))
+                    PopUpWindow.Information("CAR ADDED ERROR", ex.getLocalizedMessage());
+                else{
+                    ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                    PopUpWindow.Information("CAR ADDED", "you have added successfully a car");
+                }
             }
             catch(Exception ex){
-                System.out.println(ex.getStackTrace());
-                System.out.println(ex.toString());
-                System.out.println(ex.getMessage());
-                System.out.println(ex.getLocalizedMessage());
+                PopUpWindow.Information("CAR ADDED ERROR", ex.getLocalizedMessage());
             }
-        //exception handling must be implemented
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }
 	
 	//Cancel button, Closes Window
@@ -124,12 +112,11 @@ public class AddCarController extends PopUpController implements Initializable{
         }
         
         
-        
+        //This method creates a unique id for the newly created car
         private int createId(){
             Random rand = new Random();
             int id;
             ObservableList<CarInventoryModel> list = this.getParent().getCarTableList();
-            
             do{
                 id = rand.nextInt(2000000000);
             }while(idFound(list,id));
@@ -137,6 +124,7 @@ public class AddCarController extends PopUpController implements Initializable{
         }
 	
         
+        //This method checks if the randomly created id already exists
         private boolean idFound(ObservableList<CarInventoryModel> list, int id){
             for(int i = 0; i < list.size(); i++)
                 if(list.get(i).getId().equals(String.valueOf(id)))
@@ -144,14 +132,30 @@ public class AddCarController extends PopUpController implements Initializable{
             return false;
         }
         
+        //This method checks if there is at least one empty text field when add button is pressed
+        private boolean inputIsEmpty(){
+            String brand = brandTextFieldAdd.getText();
+            String model = modelTextFieldAdd.getText();
+            String price = priceTextFieldAdd.getText();
+            
+            brandTextFieldAdd.setText(brand.trim());
+            modelTextFieldAdd.setText(model.trim());
+            priceTextFieldAdd.setText(price.trim());
+            
+            return brand.equals("") || model.equals("") || price.equals("");
+        }
         
-        
-
-//Generate Random ID
-	public void btnRandomOnAction(ActionEvent event) throws IOException{
-		Random rand = new Random(); 
-		random_id = rand.nextInt(10000); 
-		
-		idTextFieldAdd.setText( String.valueOf(random_id));		
-	}
+        //This method check if the value in textfield price is a number
+        private boolean priceIsNumber(){
+            try{
+                Double.parseDouble(priceTextFieldAdd.getText());  
+            }
+            catch(NumberFormatException ex){
+                return false;
+            }
+            catch(Exception ex){
+                return false;
+            }
+            return true;
+        }
 }

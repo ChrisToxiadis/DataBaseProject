@@ -90,7 +90,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Button>
-            <VBox alignment="CENTER" prefHeight="158.0" prefWidth="142.0">
+            <VBox alignment="CENTER" prefHeight="158.0" prefWidth="142.0" style="-fx-border-color: #000000;">
                <children>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="142.0">
                      <children>
@@ -137,6 +137,9 @@
                      </font>
                   </Label>
                </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
             </VBox>
          </children>
          <opaqueInsets>

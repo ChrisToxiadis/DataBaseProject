@@ -1,13 +1,9 @@
 package home.client_list.pop_up;
 
-import data_base_interface.DBConnection;
-import home.car_inventory.pop_up.EditCarController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,7 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.DBConnection;
 import util.PopUpController;
+import util.PopUpWindow;
 
 public class EditClientController extends PopUpController implements Initializable{
 
@@ -41,6 +39,11 @@ public class EditClientController extends PopUpController implements Initializab
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        initializeChoiceBox();
+    }
+    
+    
+    private void initializeChoiceBox(){
         String[] gender_array = {"Male", "Female"};
         String[] country_array = {"GR", "CY", "ES", "IT"};
 
@@ -70,6 +73,8 @@ public class EditClientController extends PopUpController implements Initializab
             String[] input_array = input_toArray();
             if(!isChanged(row_array,input_array))
                 ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+            else if(!phoneIsNumber())
+                PopUpWindow.Information("Wrong Input", "Phone field takes only numbers");
             else{
                 try {
                     StringBuilder sql_update = new StringBuilder();
@@ -82,26 +87,28 @@ public class EditClientController extends PopUpController implements Initializab
                     
                     DBConnection.getStatement().executeUpdate("select edit_client(" + sql_update.toString() + ")");
                     DBConnection.closeConnection();
-                } catch(SQLException ex){
-                System.out.println("sql ex" + ex.toString());
-                System.out.println("sql ex" + ex.getMessage());
-                System.out.println("sql ex" + ex.getLocalizedMessage());
-                System.out.println("sql ex" + ex.getErrorCode());
-                System.out.println("sql ex" + ex.getSQLState());
-            }
-            catch(Exception ex){
-                System.out.println(ex.getStackTrace());
-                System.out.println(ex.toString());
-                System.out.println(ex.getMessage());
-                System.out.println(ex.getLocalizedMessage());
-            }
+                    
+                    ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                    PopUpWindow.Information("CLIENT MODIFICATION", "You have modify successfully a client");
+                    
+                }
+                catch(SQLException ex){
+                    if(!ex.getSQLState().equals("0100E"))
+                        PopUpWindow.Information("CLIENT MODIFICATION ERROR", ex.getLocalizedMessage());
+                    else{
+                        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                        PopUpWindow.Information("CLIENT MODIFICATION", "You have modify successfully a client");
+                    }
+                }
+                catch(Exception ex){
+                    PopUpWindow.Information("CLIENT MODIFICATION ERROR", ex.getLocalizedMessage());
+                }
             }
         }
 	
 	//Cancel button, Closes Window
 	public void btnCancelEditOnAction(ActionEvent event) throws IOException{
-            getTable();
-		((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 	}
         
         
@@ -112,7 +119,7 @@ public class EditClientController extends PopUpController implements Initializab
         }
         
         
-        
+        //This method converts all the data from text fields to array
         private String[] input_toArray(){
             String[] array = new String[5];
             array[0] = nameTextFieldEdit.getText();
@@ -123,16 +130,31 @@ public class EditClientController extends PopUpController implements Initializab
             return array;
         }
         
-        
+        //This method checks if there is indeed any modification in the data
         private boolean isChanged(String[] row_array, String[] input_array){
             for(int i = 0; i < input_array.length; i++)
                 if(!row_array[i+1].equals(input_array[i]))
                     return true;
             return false;
         }
+        
+        
+        //This method check if the value in textfield phone is a number
+        private boolean phoneIsNumber(){
+            try{
+                Double.parseDouble(phoneTextFieldEdit.getText());  
+            }
+            catch(NumberFormatException ex){
+                return false;
+            }
+            catch(Exception ex){
+                return false;
+            }
+            return true;
+        }
 	
         
-        
+        //This method auto completes the fields in the window
         private void initialize(){
             nameTextFieldEdit.setText(row_array[1]);
             surnameTextFieldEdit.setText(row_array[2]);

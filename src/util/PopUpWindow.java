@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -52,6 +53,8 @@ public final class PopUpWindow {
 			window.initStyle(stageStyle);
 			window.setResizable(false);
 			
+			window.getIcons().add(new Image(PopUpWindow.class.getResourceAsStream("../images/icon.png")));
+			
 			if(wait) {
 				window.showAndWait();
 				return window;
@@ -70,7 +73,6 @@ public final class PopUpWindow {
 	}
 	
 	public static Boolean ExitConfirmation(Stage window) {
-		
 		//Show Exit Confirmation Window
 		Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
 		alert.setTitle("Exit Confirmation");
@@ -82,9 +84,15 @@ public final class PopUpWindow {
 			window.close();
 			return true;
 		}
-		return false;
-				
-		
+		return false;	
 	}
+        
+        
+        public static void Information(String title, String header){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(title);
+            alert.setHeaderText(header);
+            alert.showAndWait();
+        }
 	
 }

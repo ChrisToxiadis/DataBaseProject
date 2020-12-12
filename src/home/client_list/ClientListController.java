@@ -1,8 +1,7 @@
 package home.client_list;
 
-import data_base_interface.DBConnection;
 import home.car_inventory.CarInventoryController;
-import home.create_observable_list.ObservableListCreator;
+import util.ObservableListCreator;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -16,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import util.Controller;
+import util.DBConnection;
 import util.FxmlPath;
 import util.PopUpWindow;
 
@@ -60,6 +61,12 @@ public class ClientListController extends Controller implements Initializable{
     
     private ObservableList<ClientListModel> list = FXCollections.observableArrayList();
     
+    private ObservableListCreator list_creator1 = new ObservableListCreator();
+    private ObservableListCreator list_creator2 = new ObservableListCreator();
+    
+    private ObservableList<String> list1;
+    private ObservableList<String> list2;
+    
     private String[][] array = new String[4][2];
     private final String DEFAULT_CHOICE_BOX_VALUE = "All";
     
@@ -67,17 +74,25 @@ public class ClientListController extends Controller implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         try{
             initializeArray(array);
+            initializeclientTable();
+            initializeChoiceBox();
+
+            // add Listeners for Choice Boxes
+            setChoiceBoxListeners();
             
-            ObservableListCreator list_creator1 = new ObservableListCreator();
-            ObservableListCreator list_creator2 = new ObservableListCreator();
-            
-            ObservableList<String> list1;
-            ObservableList<String> list2;
-            
-            
-            ResultSet res = DBConnection.getStatement().executeQuery("select getTable2() as getTable");
-            Vector<Vector<String>> vector = DBConnection.loadDBinVector(res, "getTable");
-            for(int i = 0; i < vector.size(); i++){
+        }
+        catch (ClassNotFoundException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        } catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+    }
+    
+    
+    private void initializeclientTable() throws ClassNotFoundException, SQLException{
+        ResultSet res = DBConnection.getStatement().executeQuery("select getTable2() as getTable");
+        Vector<Vector<String>> vector = DBConnection.loadDBinVector(res, "getTable");
+        for(int i = 0; i < vector.size(); i++){
                 int j = 0;
                 list.add(new ClientListModel(
                         vector.elementAt(i).elementAt(j++),
@@ -87,21 +102,22 @@ public class ClientListController extends Controller implements Initializable{
                         vector.elementAt(i).elementAt(j++),
                         vector.elementAt(i).elementAt(j++)
                 ));
-            }
+        }
             
-            DBConnection.closeConnection();
-            
-            idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
-            phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-            countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
-            genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-            clientTable.setItems(list);
-            
-            
-            
-             //Create Choice box for Country
+        DBConnection.closeConnection();
+        
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        clientTable.setItems(list);
+    }
+    
+    
+    private void initializeChoiceBox() throws ClassNotFoundException, SQLException{
+            //Create Choice box for Country
             list1 = list_creator1.getObservableList(DBConnection.getStatement().executeQuery("select getCountries() as Country"), "Country");
             DBConnection.closeConnection();
             countryBox.setItems(list1);
@@ -115,17 +131,6 @@ public class ClientListController extends Controller implements Initializable{
             //give default values in choice boxes
             countryBox.getSelectionModel().selectFirst();
             genderBox.getSelectionModel().selectFirst();
-            
-            
-            // add Listeners for Choice Boxes
-            setChoiceBoxListeners();
-            
-        }
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(CarInventoryController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CarInventoryController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     
@@ -218,18 +223,22 @@ public class ClientListController extends Controller implements Initializable{
         array[2][0] = "select select_firstname(";
         array[3][0] = "select select_lastname(";
     }
-
-
-
-
-
-//Add Client Button Action, Opens Add Client Button
+    
+    
+        //Add Client Button Action, Opens Add Client Button
 	public void btnAddClientOnAction(ActionEvent event) throws IOException{
 		PopUpWindow.NewBorderPaneWindow("Adding Client", FxmlPath.addClientFXML, StageStyle.DECORATED, Modality.APPLICATION_MODAL, true, this.getHomeController(), this);
 	}
     
 	//Edit Client Button Action, Opens Edit Client Button
 	public void btnEditClientOnAction(ActionEvent event) throws IOException{
+            if(clientTable.getSelectionModel().getSelectedIndex() < 0){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("NOTHING IS SELECTED");
+                alert.setHeaderText("you have to select a row first");
+                alert.showAndWait();
+        }
+            else
 		PopUpWindow.NewBorderPaneWindow("Editing Client", FxmlPath.editClientFXML, StageStyle.DECORATED, Modality.APPLICATION_MODAL, true, this.getHomeController(), this);
 	}
 
@@ -237,12 +246,34 @@ public class ClientListController extends Controller implements Initializable{
 	public void btnSelectOnAction(ActionEvent event) throws IOException{
             ClientListModel row;
             if(clientTable.getSelectionModel().getSelectedIndex() < 0)
-                System.out.println("there is no line selected");
+                PopUpWindow.Information("NOTHING IS SELECTED", "You have to select a row first");
             else{
                 row = (ClientListModel) clientTable.getSelectionModel().getSelectedItem();
 		this.getHomeController().setSelectedClient(row.getId());
             }
 	}
+        
+        
+        public void btnDeleteCarOnAction(ActionEvent ev){
+        try {
+            if(clientTable.getSelectionModel().getSelectedIndex() >= 0){
+              ClientListModel  row = (ClientListModel) clientTable.getSelectionModel().getSelectedItem();
+              DBConnection.getStatement().executeQuery("select delete_client(" + row.getId() + ")");
+              DBConnection.closeConnection();
+              
+              this.getHomeController().LoadClientList(Boolean.FALSE);
+              PopUpWindow.Information("CAR DELETION", "You have deleted successfully a client");
+            }
+            else
+                PopUpWindow.Information("NOTHING IS SELECTED", "You have to select a row first");
+        }
+        catch(SQLException ex){
+            PopUpWindow.Information("CLIENT DELETION ERROR", ex.getLocalizedMessage());
+        }
+        catch(Exception ex){
+            PopUpWindow.Information("CLIENT DELETION ERROR", ex.getLocalizedMessage());
+        }
+    }
         
         
         @Override
@@ -252,7 +283,6 @@ public class ClientListController extends Controller implements Initializable{
         
         @Override
     public String[] getRow(){
-        System.out.println("IT IS FINE !!!!!!!!!!!");
         ClientListModel row = getSelectedRow();
       
         String[] array = new String[6];
@@ -263,9 +293,6 @@ public class ClientListController extends Controller implements Initializable{
             array[3] = row.getPhone();
             array[4] = row.getCountry();
             array[5] = row.getGender();
-            
-            for(int i = 0; i < array.length; i++)
-                System.out.println("Array = " + array[i]);
             return array;
         }
     
