@@ -1,0 +1,19 @@
+.button {
+	-fx-background-color: #b33636;
+	-fx-text-fill: white;
+}
+.button:pressed {
+	-fx-background-color: #802424;
+}
+
+.side-menu-button {
+	-fx-background-color:  #a32e2e;
+	-fx-blend-mode: SRC_OVER;
+	-fx-border-color: #3b1010; 
+}
+.side-menu-button-selected {
+	-fx-background-color:  #802424;
+	-fx-blend-mode: SRC_OVER;
+	-fx-border-color: #3b1010; 
+	
+}
