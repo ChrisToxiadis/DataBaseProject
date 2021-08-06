@@ -1,0 +1,52 @@
+--Χρησιμοποιούνται από την μέθοδο initializeChoiceBox()
+
+
+CREATE OR REPLACE FUNCTION getBrands()
+RETURNS TABLE (BrandColumn varchar(45)) AS
+$$
+SELECT DISTINCT brand FROM cars
+$$
+LANGUAGE SQL;
+
+select getBrands();
+
+
+CREATE OR REPLACE FUNCTION getModels()
+RETURNS TABLE(ModelColumn varchar(45)) AS
+$$
+SELECT DISTINCT model FROM cars
+$$
+LANGUAGE SQL;
+
+select getModels();
+
+
+CREATE OR REPLACE FUNCTION getColors()
+RETURNS TABLE(ColorColumn varchar(45)) AS
+$$
+SELECT DISTINCT color FROM cars
+$$
+LANGUAGE SQL;
+
+select getColors();
+
+
+CREATE OR REPLACE FUNCTION getPrices()
+RETURNS TABLE(PriceColumn numeric) AS
+$$
+SELECT DISTINCT price FROM cars
+$$
+LANGUAGE SQL;
+
+select getPrices();
+
+
+
+CREATE OR REPLACE FUNCTION getConditions()
+RETURNS TABLE(ConditionColumn varchar(45)) AS
+$$
+SELECT DISTINCT condition FROM cars
+$$
+LANGUAGE SQL;
+
+select getConditions();

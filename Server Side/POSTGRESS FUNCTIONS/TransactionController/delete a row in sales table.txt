@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnDeleteCarOnAction(ActionEvent ev) της TransactionController
+
+
+CREATE OR REPLACE FUNCTION delete_transaction(integer,integer)
+RETURNS void AS
+$$
+DELETE FROM sales WHERE idcars=$1 and idcustomers=$2;
+$$
+LANGUAGE SQL;
+
+select delete_transaction(1,2);

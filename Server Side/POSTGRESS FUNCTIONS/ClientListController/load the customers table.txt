@@ -1,0 +1,10 @@
+--Χρησιμοποιούνται από την μέθοδο initializeclientTable()
+
+CREATE OR REPLACE FUNCTION getTable2()
+RETURNS SETOF customers AS
+$$
+SELECT * FROM customers
+$$
+LANGUAGE SQL;
+
+select getTable2();

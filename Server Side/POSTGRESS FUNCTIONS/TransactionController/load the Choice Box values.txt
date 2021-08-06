@@ -1,0 +1,33 @@
+--Χρησιμοποιούνται από την μέθοδο initializeChoiceBox()
+
+
+CREATE OR REPLACE FUNCTION getTransactionBrands()
+RETURNS TABLE (brand varchar) AS
+$$
+SELECT DISTINCT brand FROM sales s INNER JOIN cars c ON s.idcars=c.idcars
+$$
+LANGUAGE SQL;
+
+select getTransactionBrands();
+
+
+CREATE OR REPLACE FUNCTION getTransactionColors()
+RETURNS TABLE (color varchar) AS
+$$
+SELECT DISTINCT color FROM sales s INNER JOIN cars c ON s.idcars=c.idcars
+$$
+LANGUAGE SQL;
+
+select getTransactionColors();
+
+
+
+CREATE OR REPLACE FUNCTION getTransactionCountries()
+RETURNS TABLE (country varchar) AS
+$$
+SELECT DISTINCT country FROM sales s INNER JOIN customers c ON s.idcustomers=c.idcustomers
+$$
+LANGUAGE SQL;
+
+
+select getTransactionCountries();

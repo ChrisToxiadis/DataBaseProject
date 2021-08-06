@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnDeleteCarOnAction(ActionEvent ev) της CarInventoryController
+
+
+CREATE OR REPLACE FUNCTION delete_car(integer)
+RETURNS void AS
+$$
+DELETE FROM cars WHERE idcars=$1;
+$$
+LANGUAGE SQL;
+
+select delete_car(1);

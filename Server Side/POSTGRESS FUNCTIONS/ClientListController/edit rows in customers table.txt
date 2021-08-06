@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnApplyEditOnAction(ActionEvent event) event της EditClientController
+
+
+CREATE OR REPLACE FUNCTION edit_client(integer,varchar(45),varchar(45),varchar(45),varchar(45),varchar(45))
+RETURNS void AS
+$$
+UPDATE customers SET firstname=$2,lastname=$3,phone=$4,country=$5,gender=$6 where idcustomers=$1
+$$
+LANGUAGE SQL;
+
+select edit_client(1,'John','Patrick','1546234288','IT','Male');

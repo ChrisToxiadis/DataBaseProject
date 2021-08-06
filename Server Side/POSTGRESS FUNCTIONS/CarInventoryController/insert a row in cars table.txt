@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnAddCarAddOnAction(ActionEvent event) της AddCarController
+
+
+CREATE OR REPLACE FUNCTION add_car(integer,varchar(45),varchar(45),varchar(45),numeric,varchar(45))
+RETURNS void AS
+$$
+INSERT INTO cars (idcars,brand,model,color,price,condition) VALUES ($1,$2,$3,$4,$5,$6);
+$$
+LANGUAGE SQL;
+
+select add_car('14','Mercedes','C 50','Black','46472','Used');

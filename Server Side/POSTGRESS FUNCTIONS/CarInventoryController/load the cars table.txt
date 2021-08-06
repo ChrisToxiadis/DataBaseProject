@@ -1,0 +1,11 @@
+--Χρησιμοποιούνται από την μέθοδο initializeCarTable()
+
+
+CREATE OR REPLACE FUNCTION getTable1()
+RETURNS SETOF cars AS
+$$
+SELECT * FROM cars
+$$
+LANGUAGE SQL;
+
+select getTable1();

@@ -1,0 +1,68 @@
+--Χρησιμοποιούνται από την μέθοδο createsSQLQuery(String value, int position)
+-- και από την μέθοδο getSQLQuery(String value, int position)
+
+
+CREATE OR REPLACE FUNCTION select_date(varchar(45))
+RETURNS TABLE (date varchar,idcars int, brand varchar, model varchar, color varchar, price numeric, condition varchar, idcustomers int, firstname varchar, lastname varchar, country varchar) AS
+$$
+SELECT s.date,r.idcars,r.brand,r.model,r.color,r.price,r.condition,c.idcustomers,c.firstname,c.lastname,c.country FROM cars AS r
+JOIN sales AS s ON r.idcars = s.idcars
+JOIN customers AS c ON s.idcustomers = c.idcustomers  WHERE s.date = $1;
+$$ LANGUAGE SQL;
+
+
+SELECT * FROM select_date('8/11/2020');
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION select_transaction_color(varchar(45))
+RETURNS TABLE (date varchar,idcars int, brand varchar, model varchar, color varchar, price numeric, condition varchar, idcustomers int, firstname varchar, lastname varchar, country varchar) AS
+$$
+SELECT s.date,r.idcars,r.brand,r.model,r.color,r.price,r.condition,c.idcustomers,c.firstname,c.lastname,c.country FROM cars AS r
+JOIN sales AS s ON r.idcars = s.idcars
+JOIN customers AS c ON s.idcustomers = c.idcustomers  WHERE r.color = $1;
+$$ LANGUAGE SQL;
+
+SELECT * FROM select_color('Red');
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION select_phone(varchar(45))
+RETURNS TABLE (date varchar,idcars int, brand varchar, model varchar, color varchar, price numeric, condition varchar, idcustomers int, firstname varchar, lastname varchar, country varchar) AS
+$$
+SELECT s.date,r.idcars,r.brand,r.model,r.color,r.price,r.condition,c.idcustomers,c.firstname,c.lastname,c.country FROM cars AS r
+JOIN sales AS s ON r.idcars = s.idcars
+JOIN customers AS c ON s.idcustomers = c.idcustomers  WHERE c.phone = $1;
+$$
+LANGUAGE SQL;
+
+SELECT * FROM select_phone('6940400404');
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE FUNCTION select_transaction_country(varchar(45))
+RETURNS TABLE (date varchar,idcars int, brand varchar, model varchar, color varchar, price numeric, condition varchar, idcustomers int, firstname varchar, lastname varchar, country varchar) AS
+$$
+SELECT s.date,r.idcars,r.brand,r.model,r.color,r.price,r.condition,c.idcustomers,c.firstname,c.lastname,c.country FROM cars AS r
+JOIN sales AS s ON r.idcars = s.idcars
+JOIN customers AS c ON s.idcustomers = c.idcustomers  WHERE c.country = $1;
+$$
+LANGUAGE SQL;
+
+SELECT * FROM select_country('ES');
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION select_transaction_brand(varchar(45))
+RETURNS TABLE (date varchar,idcars int, brand varchar, model varchar, color varchar, price numeric, condition varchar, idcustomers int, firstname varchar, lastname varchar, country varchar) AS
+$$
+SELECT s.date,r.idcars,r.brand,r.model,r.color,r.price,r.condition,c.idcustomers,c.firstname,c.lastname,c.country FROM cars AS r
+JOIN sales AS s ON r.idcars = s.idcars
+JOIN customers AS c ON s.idcustomers = c.idcustomers  WHERE r.brand = $1;
+$$
+LANGUAGE SQL;
+
+SELECT * FROM select_brand('Tesla');
+
+--------------------------------------------------------------------------------------------------------------------------------------------

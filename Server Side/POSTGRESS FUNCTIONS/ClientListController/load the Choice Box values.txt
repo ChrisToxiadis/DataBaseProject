@@ -1,0 +1,21 @@
+--Χρησιμοποιούνται από την μέθοδο initializeChoiceBox()
+
+
+CREATE OR REPLACE FUNCTION getCountries()
+RETURNS TABLE(CountryColumn varchar(45)) AS
+$$
+SELECT DISTINCT country FROM customers
+$$
+LANGUAGE SQL;
+
+select getCountries();
+
+
+CREATE OR REPLACE FUNCTION getGenders()
+RETURNS TABLE(GenderColumn varchar(45)) AS
+$$
+SELECT DISTINCT gender FROM customers
+$$
+LANGUAGE SQL;
+
+select getGenders();
