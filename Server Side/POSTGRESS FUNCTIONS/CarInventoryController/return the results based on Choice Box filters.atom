@@ -1,0 +1,48 @@
+--Χρησιμοποιούνται από την μέθοδο createsSQLQuery(String value, int position)
+-- και από την μέθοδο getSQLQuery(String value, int position)
+
+
+CREATE OR REPLACE FUNCTION select_brand(varchar(45))
+RETURNS SETOF cars AS
+$$
+SELECT * FROM cars WHERE brand = $1;
+$$
+LANGUAGE SQL
+
+SELECT * FROM select_brand('BMW');
+
+
+CREATE OR REPLACE FUNCTION select_model(varchar(45))
+RETURNS SETOF cars AS $$
+SELECT * FROM cars WHERE model = $1;
+$$
+LANGUAGE SQL
+
+SELECT * FROM select_model('S');
+
+CREATE OR REPLACE FUNCTION select_color(varchar(45))
+RETURNS SETOF cars AS $$
+SELECT * FROM cars WHERE color = $1;
+$$
+LANGUAGE SQL
+
+SELECT * FROM select_color('Silver');
+SELECT * FROM select_color('Silver') INTERSECT SELECT * FROM select_brand('Ford');
+
+
+CREATE OR REPLACE FUNCTION select_price(numeric)
+RETURNS SETOF cars AS $$
+SELECT * FROM cars WHERE price = $1;
+$$
+LANGUAGE SQL
+
+SELECT * FROM select_price(13.500);
+
+
+CREATE OR REPLACE FUNCTION select_condition(varchar(45))
+RETURNS SETOF cars AS $$
+SELECT * FROM cars WHERE condition = $1;
+$$
+LANGUAGE SQL
+
+SELECT * FROM select_condition('Used');

@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnApplyTransactionEditOnAction(ActionEvent event) event της EditTransactionController
+
+
+CREATE OR REPLACE FUNCTION edit_transaction(integer,integer,varchar(45))
+RETURNS void AS
+$$
+UPDATE sales SET date=$3 where idcars=$1 and idcustomers=$2
+$$
+LANGUAGE SQL;
+
+select edit_transaction(1,2,'1/01/2021');

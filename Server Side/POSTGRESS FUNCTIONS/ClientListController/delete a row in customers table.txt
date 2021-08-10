@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnDeleteCarOnAction(ActionEvent ev) της ClientListController
+
+
+CREATE OR REPLACE FUNCTION delete_client(integer)
+RETURNS void AS
+$$
+DELETE FROM customers WHERE idcustomers=$1;
+$$
+LANGUAGE SQL;
+
+select delete_client(335560803);

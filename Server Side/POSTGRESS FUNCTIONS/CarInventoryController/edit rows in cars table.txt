@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnApplyEditOnAction(ActionEvent event) της EditCarController
+
+
+CREATE OR REPLACE FUNCTION edit_car(integer,varchar(45),varchar(45),varchar(45),numeric,varchar(45))
+RETURNS void AS
+$$
+UPDATE cars SET brand=$2,model=$3,color=$4,price=$5,condition=$6 where idcars=$1
+$$
+LANGUAGE SQL;
+
+select edit_car(1,'Porsche','Kayen','Blue',20000,'Used');

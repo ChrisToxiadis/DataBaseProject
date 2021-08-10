@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnAddTransactionAddOnAction(ActionEvent event) της AddTransactionController
+
+
+CREATE OR REPLACE FUNCTION add_transaction(integer,integer,varchar(45))
+RETURNS void AS
+$$
+INSERT INTO sales (idcars,idcustomers,date) VALUES ($1,$2,$3);
+$$
+LANGUAGE SQL;
+
+select add_transaction(1,2,'1/1/1');

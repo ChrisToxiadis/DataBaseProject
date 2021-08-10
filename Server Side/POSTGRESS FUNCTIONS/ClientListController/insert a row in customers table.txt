@@ -1,0 +1,11 @@
+--Χρησιμοποιείται από την btnAddClientAddOnAction(ActionEvent event) της AddClientController
+
+
+CREATE OR REPLACE FUNCTION add_client(integer,varchar(45),varchar(45),varchar(45),varchar(45),varchar(45))
+RETURNS void AS
+$$
+INSERT INTO customers (idcustomers,firstname,lastname,phone,country,gender) VALUES ($1,$2,$3,$4,$5,$6);
+$$
+LANGUAGE SQL;
+
+select add_client (idcustomers,firstname,lastname,phone,country,gender) VALUES (14,'Maria','DB','908812312','IT','Female');

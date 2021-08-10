@@ -1,0 +1,37 @@
+--Χρησιμοποιούνται από την μέθοδο createsSQLQuery(String value, int position)
+-- και από την μέθοδο getSQLQuery(String value, int position)
+
+
+CREATE OR REPLACE FUNCTION select_firstname(varchar(45))
+RETURNS SETOF customers AS $$
+SELECT * FROM customers WHERE firstname = $1;
+$$
+LANGUAGE SQL;
+
+SELECT * FROM select_firstname('Nick');
+
+
+CREATE OR REPLACE FUNCTION select_lastname(varchar(45))
+RETURNS SETOF customers AS $$
+SELECT * FROM customers WHERE lastname = $1;
+$$
+LANGUAGE SQL;
+
+SELECT * FROM select_lastname('Papadopoulos');
+
+CREATE OR REPLACE FUNCTION select_country(varchar(45))
+RETURNS SETOF customers AS $$
+SELECT * FROM customers WHERE country = $1;
+$$
+LANGUAGE SQL;
+
+SELECT * FROM select_country('GR')
+
+
+CREATE OR REPLACE FUNCTION select_gender(varchar(45))
+RETURNS SETOF customers AS $$
+SELECT * FROM customers WHERE gender = $1;
+$$
+LANGUAGE SQL;
+
+SELECT * FROM select_gender('Other')

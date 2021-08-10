@@ -1,0 +1,12 @@
+----Χρησιμοποιείται από την μέθοδο initializeTransactionTable()
+
+
+CREATE OR REPLACE FUNCTION getTable3()
+RETURNS TABLE (date varchar,idcars int, brand varchar, model varchar, color varchar,condition varchar, price numeric, idcustomers int, firstname varchar, lastname varchar, country varchar) AS
+$$
+SELECT date,cars.idcars,brand,model,color,condition,price,c.idcustomers,firstname,lastname,country
+FROM (sales inner join cars ON cars.idcars=sales.idcars) INNER JOIN customers c ON c.idcustomers=sales.idcustomers
+$$
+LANGUAGE SQL;
+
+select getTable3();
