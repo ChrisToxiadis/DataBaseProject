@@ -1,0 +1,40 @@
+create table cars_logs_table (
+operation varchar(10) NOT NULL,
+stamp timestamp NOT NULL,
+userid varchar(20) NOT NULL,
+idcars integer NOT NULL,
+brand varchar(45) NOT NULL,
+model varchar(45) NOT NULL,
+color varchar(45) NOT NULL,
+price numeric NOT NULL,
+condition varchar(45) NOT NULL,
+primary key(idcars,stamp)
+);
+
+CREATE OR REPLACE FUNCTION process_cars_logs()
+RETURNS TRIGGER AS
+$$
+BEGIN
+	IF(TG_OP = 'INSERT') THEN
+		INSERT INTO cars_logs_table
+		select 'INSERT',now(),user,NEW.*;
+		RETURN NEW;
+	ELSIF(TG_OP = 'UPDATE') THEN
+		INSERT INTO cars_logs_table
+		select 'UPDATE',now(),user,OLD.*;
+		RETURN OLD;
+	ELSIF(TG_OP = 'DELETE') THEN
+		INSERT INTO cars_logs_table
+		select 'DELETE',now(),user,OLD.*;
+		RETURN OLD;
+	END IF;
+	RETURN NULL;
+END;
+$$
+language plpgsql;
+
+
+
+CREATE TRIGGER cars_logs
+after INSERT or UPDATE or DELETE on cars
+for each row execute procedure process_cars_logs();

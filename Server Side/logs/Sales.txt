@@ -1,0 +1,36 @@
+create table sales_logs_table (operation varchar(10) NOT NULL,
+stamp timestamp NOT NULL,
+userid varchar(20) NOT NULL,
+idcars integer NOT NULL,
+idcustomers integer NOT NULL,
+date varchar(45) NOT NULL,
+primary key(idcars,idcustomers,stamp)
+)
+
+
+
+CREATE OR REPLACE FUNCTION process_sales_logs()
+RETURNS TRIGGER AS
+$$
+BEGIN
+	IF(TG_OP = 'INSERT') THEN
+		INSERT INTO sales_logs_table
+		select 'INSERT',now(),user,NEW.*;
+		RETURN NEW;
+	ELSIF(TG_OP = 'UPDATE') THEN
+		INSERT INTO sales_logs_table
+		select 'UPDATE',now(),user,OLD.*;
+		RETURN OLD;
+	ELSIF(TG_OP = 'DELETE') THEN
+		INSERT INTO sales_logs_table
+		select 'DELETE',now(),user,OLD.*;
+		RETURN OLD;
+	END IF;
+	RETURN NULL;
+END;
+$$
+language plpgsql;
+
+CREATE TRIGGER sales_logs
+after INSERT or UPDATE or DELETE on sales
+for each row execute procedure process_sales_logs();

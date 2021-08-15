@@ -1,0 +1,43 @@
+create table customers_logs_table (operation varchar(10) NOT NULL,
+stamp timestamp NOT NULL,
+userid varchar(20) NOT NULL,
+idcustomers integer NOT NULL,
+firstname varchar(45) NOT NULL,
+lastname varchar(45) NOT NULL,
+phone varchar(45) NOT NULL,
+country varchar(45) NOT NULL,
+gender varchar(45) NOT NULL,
+primary key(idcustomers,stamp)
+);
+
+
+
+
+
+CREATE OR REPLACE FUNCTION process_customers_logs()
+RETURNS TRIGGER AS
+$$
+BEGIN
+	IF(TG_OP = 'INSERT') THEN
+		INSERT INTO customers_logs_table
+		select 'INSERT',now(),user,NEW.*;
+		RETURN NEW;
+	ELSIF(TG_OP = 'UPDATE') THEN
+		INSERT INTO customers_logs_table
+		select 'UPDATE',now(),user,OLD.*;
+		RETURN OLD;
+	ELSIF(TG_OP = 'DELETE') THEN
+		INSERT INTO customers_logs_table
+		select 'DELETE',now(),user,OLD.*;
+		RETURN OLD;
+	END IF;
+	RETURN NULL;
+END;
+$$
+language plpgsql;
+
+
+
+CREATE TRIGGER customers_logs
+after INSERT or UPDATE or DELETE on customers
+for each row execute procedure process_customers_logs();
