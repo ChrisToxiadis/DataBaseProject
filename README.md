@@ -1,1 +1,1 @@
-Σε αυτό το branch είναι το source code για όλο το project
+This project was done by [dim-tri](https://github.com/dim-tri), [vaggos542](https://github.com/vaggos542) and me. My part was back-end development in the client-side and server-side development (postgres functions and log files).
